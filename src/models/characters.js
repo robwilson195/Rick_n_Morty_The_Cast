@@ -6,6 +6,10 @@ const Characters = function () {
 };
 
 Characters.prototype.bindEvents = function () {
+  PubSub.subscribe('PageSelectView:page-chosen', (event) => {
+    const pageChosen = event.detail;
+    this.publishCharacters(pageChosen-1);
+  })
   this.getData();
 };
 
@@ -17,17 +21,18 @@ Characters.prototype.getData = function () {
     .then((pageCharacters) => {
       this.characterData.push([pageCharacters.results]);
       if (i === 25) {
+        // console.log(characterData);
         this.publishCharacters(0);
       }
     })
     .catch((error) => {
-      PubSub.publish('Characters:error', err);
+      PubSub.publish('Characters:error', error);
     });
   }
 };
 
 Characters.prototype.publishCharacters = function (pageIndex) {
-  PubSub.publish('Characters:character-data-ready', this.characterData[pageIndex]);
+  PubSub.publish('Characters:character-data-ready', this.characterData[pageIndex][0]);
 }
 
 module.exports = Characters;
