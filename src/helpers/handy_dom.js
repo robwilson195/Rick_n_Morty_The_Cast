@@ -1,7 +1,10 @@
-const HandyDom = function () {
+const HandyDom = {
+  createElement: function (elementType, key, value) {
+    const element = document.createElement(elementType);
+    element[key] = value;
+    return element;
+  }
 }
 
-HandyDom.prototype.createElement = function (elementType, key, value) {
-  const element = document.createElement(elementType);
-  element[key] = value;
-};
+
+module.exports = HandyDom;

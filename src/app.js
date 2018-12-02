@@ -4,11 +4,12 @@ const Characters = require('./models/characters.js');
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  const element = document.querySelector('.main-select');
-  const pageSelectView = new PageSelectView(element);
+  const selectElement = document.querySelector('.main-select');
+  const pageSelectView = new PageSelectView(selectElement);
   pageSelectView.bindEvents();
 
-  const characterListView = new CharacterListView;
+  const characterWrapperElement = document.querySelector('.characters-wrapper')
+  const characterListView = new CharacterListView(characterWrapperElement);
   characterListView.bindEvents();
 
   const characters = new Characters;

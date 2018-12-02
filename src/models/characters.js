@@ -19,10 +19,13 @@ Characters.prototype.getData = function () {
     const request = new Request(url);
     request.get()
     .then((pageCharacters) => {
-      this.characterData.push([pageCharacters.results]);
+      // console.log(pageCharacters);
+      this.characterData.push(pageCharacters.results );
       if (i === 25) {
-        // console.log(characterData);
+        console.log(this.characterData);
         this.publishCharacters(0);
+      } else {
+        return;
       }
     })
     .catch((error) => {
@@ -32,7 +35,7 @@ Characters.prototype.getData = function () {
 };
 
 Characters.prototype.publishCharacters = function (pageIndex) {
-  PubSub.publish('Characters:character-data-ready', this.characterData[pageIndex][0]);
+  PubSub.publish('Characters:character-data-ready', this.characterData[pageIndex]);
 }
 
 module.exports = Characters;
